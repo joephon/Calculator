@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <TableLayout
+    android:id="@+id/table"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:stretchColumns="*">
+    android:stretchColumns="*"
+    android:background="#000">
 
-    <TextView
-        android:text="100"
+    <EditText
+        android:id="@+id/display"
+        android:hint="0"
+        android:editable="false"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:textSize="16sp"
@@ -32,7 +39,7 @@
             android:text="9"
             android:textSize="20sp"/>
         <Button
-            android:id="@+id/btn_chu"
+            android:id="@+id/btn_divide"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="/"
@@ -58,7 +65,7 @@
             android:text="6"
             android:textSize="20sp"/>
         <Button
-            android:id="@+id/btn_cheng"
+            android:id="@+id/btn_multiply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="*"
@@ -84,7 +91,7 @@
             android:text="3"
             android:textSize="20sp"/>
         <Button
-            android:id="@+id/btn_jian"
+            android:id="@+id/btn_minus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="-"
@@ -98,18 +105,18 @@
             android:text="0"
             android:textSize="20sp"/>
         <Button
-            android:id="@+id/btn_dian"
+            android:id="@+id/btn_point"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="."
             android:textSize="20sp"/>
         <Button
-            android:id="@+id/btn_jia"
+            android:id="@+id/btn_plus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="+"/>
         <Button
-            android:id="@+id/btn_deng"
+            android:id="@+id/btn_equal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="="
@@ -117,12 +124,19 @@
     </TableRow>
     <TableRow>
         <Button
-            android:id="@+id/btn_qing"
+            android:id="@+id/btn_clear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="clear"
             android:textSize="20sp"
-            android:layout_span="4"/>
+            android:layout_span="2"/>
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="delete"
+            android:textSize="20sp"
+            android:layout_span="2"/>
 
     </TableRow>
 </TableLayout>
