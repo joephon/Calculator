@@ -36,9 +36,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btn_delete;
     Button btn_point;
     EditText display;
-    String count;
-    boolean hasPoint = false;
-    int feature;
+    String storage;
+    String pattern;
 
 
 
@@ -116,16 +115,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_minus:
             case R.id.btn_multiply:
             case R.id.btn_divide:
+                handlePattern(input, value);
                 break;
             case R.id.btn_delete:
                 handleDelete(value);
                 break;
             case R.id.btn_clear:
-                hasPoint = false;
                 display.setText(null);
+                storage = null;
+                pattern = null;
                 break;
             case R.id.btn_equal:
-                getResult();
+                handleEqual(value);
                 break;
         }
 
@@ -139,33 +140,84 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             else
                 display.setText(value + input);
         }
-        else
-            display.setText(value + input);
 
+        else {
+            if (pattern != null) {
+                if (pattern.equals("/") && input.equals("0"))
+                    return;
+            }
+            display.setText(value + input);
+        }
     }
 
 
     private void handlePoint(String input, String value) {
-        if (!hasPoint) {
+        if (value.length() == 0)
+            return;
+        if (pattern != null) {
+            String right = value.substring(value.indexOf(" ") + 3);
+            if (!right.contains(".")) {
+                display.setText(value + input);
+                return;
+            }
+        }
+        if (!value.contains(".")) {
             display.setText(value + input);
-            hasPoint = true;
         }
 
     }
 
     private void handleDelete(String value) {
         if (value != null && !value.equals("")) {
-            value = value.substring(0, value.length() - 1);
-            display.setText(value);
-            if (value.contains("."))
-                hasPoint = true;
-            else
-                hasPoint = false;
+            String last = value.substring(value.length() - 1, value.length());
+            if (last.equals(" ")) {
+                value = value.substring(0, value.length() - 3);
+                display.setText(value);
+                pattern = null;
+            }
+            else {
+                value = value.substring(0, value.length() - 1);
+                display.setText(value);
+            }
+
         }
     }
 
-    private void getResult() {
+    private void handlePattern(String input, String value) {
+        if (value.length() == 0 || pattern != null)
+            return;
+        pattern = input;
+        display.setText(value + " " + input + " ");
+    }
 
+
+    private void handleEqual(String value) {
+        if (!value.contains(" "))
+            return;
+        double left = Double.parseDouble(value.substring(0, value.indexOf(" ")));
+        double right = Double.parseDouble(value.substring(value.indexOf(" ") + 3));
+        switch (pattern) {
+            case "+":
+                storage = (left + right) + "";
+                display.setText(storage);
+                pattern = null;
+                break;
+            case "-":
+                storage = (left - right) + "";
+                display.setText(storage);
+                pattern = null;
+                break;
+            case "*":
+                storage = (left * right) + "";
+                display.setText(storage);
+                pattern = null;
+                break;
+            case "/":
+                storage = (left / right) + "";
+                display.setText(storage);
+                pattern = null;
+                break;
+        }
     }
 
 }
