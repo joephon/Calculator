@@ -129,14 +129,16 @@
             android:layout_height="wrap_content"
             android:text="clear"
             android:textSize="20sp"
-            android:layout_span="2"/>
+            android:layout_span="2"
+            android:textColor="#731515"/>
         <Button
             android:id="@+id/btn_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="delete"
             android:textSize="20sp"
-            android:layout_span="2"/>
+            android:layout_span="2"
+            android:textColor="#ba741d"/>
 
     </TableRow>
 </TableLayout>

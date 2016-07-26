@@ -136,6 +136,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (value.length() == 1) {
             if (value.equals("0"))
                 return;
+            else
+                display.setText(value + input);
         }
         else
             display.setText(value + input);
