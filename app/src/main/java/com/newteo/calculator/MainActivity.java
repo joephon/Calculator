@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 pattern = null;
                 break;
             case R.id.btn_equal:
-                handleEqual(value);
+                handleEqual(value, null);
                 break;
         }
     }
@@ -123,13 +123,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             else
                 display.setText(value + input);
         }
-        else {
-            if (pattern != null) {
-                if (pattern.equals("/") && input.equals("0"))
-                    return;
-            }
+        else
             display.setText(value + input);
-        }
     }
 
 
@@ -137,11 +132,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (value.length() == 0)
             return;
         if (pattern != null) {
-            String right = value.substring(value.indexOf(" ") + 3);
-            if (!right.contains(".")) {
+            String patterRight = value.substring(value.indexOf(pattern) + 2, value.length());
+            if (!patterRight.contains(".") && patterRight.length() > 0) {
                 display.setText(value + input);
                 return;
             }
+            return;
         }
         if (!value.contains(".")) {
             display.setText(value + input);
@@ -165,23 +161,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void handlePattern(String input, String value) {
-        if (value.length() == 0 || pattern != null)
+        if (value.length() == 0)
             return;
+        if (pattern != null) {
+            String patterRight = value.substring(value.indexOf(pattern) + 2, value.length());
+            if (patterRight.length() > 0) {
+                handleEqual(value, input);
+                return;
+            }
+            else
+                return;
+        }
+
         pattern = input;
         display.setText(value + " " + input + " ");
     }
 
 
-    private void handleEqual(String value) {
+    private void handleEqual(String value, String input) {
         if (!value.contains(" "))
+            return;
+        String patterRight = value.substring(value.indexOf(pattern) + 2, value.length());
+        if (patterRight.length() == 0)
+           return;
+        String zero = value.substring(value.indexOf("/") + 2, value.indexOf("/") + 3);
+        String zeroRight = value.substring(value.indexOf("/") + 3, value.length());
+        if (zero.equals("0") && !zeroRight.contains("."))
             return;
         double left = Double.parseDouble(value.substring(0, value.indexOf(" ")));
         double right = Double.parseDouble(value.substring(value.indexOf(" ") + 3));
-
-        handleResult(left, right);
+        handleResult(left, right, input);
     }
 
-    private void handleResult(double left, double right) {
+    private void handleResult(double left, double right, String input) {
         if (pattern.equals("+"))
             storage = (left + right) + "";
         else if (pattern.equals("-"))
@@ -192,6 +204,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             storage = (left / right) + "";
         if (storage.substring(storage.indexOf(".") + 1, storage.length()).equals("0"))
             storage = storage.substring(0, storage.indexOf("."));
+        if (input != null) {
+            display.setText(storage + " " + input + " " );
+            pattern = input;
+            return;
+        }
         display.setText(storage);
         pattern = null;
     }
