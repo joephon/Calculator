@@ -1,19 +1,10 @@
 package com.newteo.calculator;
 
-import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
-import android.widget.TableLayout;
-import android.widget.TextView;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -38,9 +29,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText display;
     String storage;
     String pattern;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_equal = (Button) findViewById(R.id.btn_equal);
         btn_point = (Button) findViewById(R.id.btn_point);
 
-
         btn0.setOnClickListener(this);
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);
@@ -86,8 +73,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_clear.setOnClickListener(this);
         btn_delete.setOnClickListener(this);
         btn_point.setOnClickListener(this);
-
-
     }
 
     @Override
@@ -129,8 +114,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 handleEqual(value);
                 break;
         }
-
-
     }
 
     private void handleInput(String input, String value) {
@@ -140,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             else
                 display.setText(value + input);
         }
-
         else {
             if (pattern != null) {
                 if (pattern.equals("/") && input.equals("0"))
@@ -179,7 +161,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 value = value.substring(0, value.length() - 1);
                 display.setText(value);
             }
-
         }
     }
 
@@ -196,30 +177,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         double left = Double.parseDouble(value.substring(0, value.indexOf(" ")));
         double right = Double.parseDouble(value.substring(value.indexOf(" ") + 3));
-        switch (pattern) {
-            case "+":
-                handleResult(left, right, pattern);
-                break;
-            case "-":
-                handleResult(left, right, pattern);
-                break;
-            case "*":
-                handleResult(left, right, pattern);
-                break;
-            case "/":
-                handleResult(left, right, pattern);
-                break;
-        }
+
+        handleResult(left, right);
     }
 
-    private void handleResult(double left, double right, String symbol) {
-        if (symbol.equals("+"))
+    private void handleResult(double left, double right) {
+        if (pattern.equals("+"))
             storage = (left + right) + "";
-        else if (symbol.equals("-"))
+        else if (pattern.equals("-"))
             storage = (left - right) + "";
-        else if (symbol.equals("*"))
+        else if (pattern.equals("*"))
             storage = (left * right) + "";
-        else if (symbol.equals("/"))
+        else if (pattern.equals("/"))
             storage = (left / right) + "";
         if (storage.substring(storage.indexOf(".") + 1, storage.length()).equals("0"))
             storage = storage.substring(0, storage.indexOf("."));
