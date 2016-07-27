@@ -198,26 +198,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         double right = Double.parseDouble(value.substring(value.indexOf(" ") + 3));
         switch (pattern) {
             case "+":
-                storage = (left + right) + "";
-                display.setText(storage);
-                pattern = null;
+                handleResult(left, right, pattern);
                 break;
             case "-":
-                storage = (left - right) + "";
-                display.setText(storage);
-                pattern = null;
+                handleResult(left, right, pattern);
                 break;
             case "*":
-                storage = (left * right) + "";
-                display.setText(storage);
-                pattern = null;
+                handleResult(left, right, pattern);
                 break;
             case "/":
-                storage = (left / right) + "";
-                display.setText(storage);
-                pattern = null;
+                handleResult(left, right, pattern);
                 break;
         }
+    }
+
+    private void handleResult(double left, double right, String symbol) {
+        if (symbol.equals("+"))
+            storage = (left + right) + "";
+        else if (symbol.equals("-"))
+            storage = (left - right) + "";
+        else if (symbol.equals("*"))
+            storage = (left * right) + "";
+        else if (symbol.equals("/"))
+            storage = (left / right) + "";
+        if (storage.substring(storage.indexOf(".") + 1, storage.length()).equals("0"))
+            storage = storage.substring(0, storage.indexOf("."));
+        display.setText(storage);
+        pattern = null;
     }
 
 }
